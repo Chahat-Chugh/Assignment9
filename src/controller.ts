@@ -1,6 +1,6 @@
 import e, {Request,response,Response} from 'express';
-import fs from 'fs/promises';
-import {User} from '../public/user';
+//import fs from 'fs/promises';
+//import {User} from '../public/user';
 import {pool} from './queries.js';
 
 class controller {
@@ -54,66 +54,9 @@ class controller {
         }
         );
     }
-    public async getCustomers(req: Request,res: Response)
-    {
-        pool.query('SELECT name from customer ORDER BY id ASC',(err,result)=>
-        {
-            if(err)
-            {
-                throw err;
-            }
-            else
-            {
-                res.status(200).json(result.rows);
-            }
-        })
-    }
-    public async getCustomerIdByName(req:Request,res:Response)
-    {
-        const customerName = req.params.name;
-        pool.query('SELECT id FROM customer WHERE name = $1',[customerName],(err,result)=>
-        {
-            if(err)
-            {
-                throw err;
-            }
-            else
-            {
-                res.status(200).send(result.rows);
-            }
-        })
-    }
+  
 
-    public async getRoles(req: Request,res: Response)
-    {
-        pool.query('SELECT name from roles ORDER BY key ASC',(err,result)=>
-        {
-            if(err)
-            {
-                throw err;
-            }
-            else
-            {
-                res.status(200).json(result.rows);
-            }
-        })
-    }
-
-    public async getRoleKeyByName(req:Request,res:Response)
-    {
-        const roleName = req.params.name;
-        pool.query('SELECT key FROM roles WHERE name = $1',[roleName],(err,result)=>
-        {
-            if(err)
-            {
-                throw err;
-            }
-            else
-            {
-                res.status(200).send(result.rows);
-            }
-        });
-    }
+   
     public async createUser(req: Request, res: Response) {
         const {firstName,middleName,lastName,email,phone,role,address,customer} = req.body;
         pool.query(`INSERT INTO users(firstname,middlename,lastname,email,phone,role,
